@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Carta Juramento</title>
+
+<!-- Fuente estilo caligrafía china -->
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background: #e5d7c3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: "SimSun", serif;
+    }
+
+    /* Carta cerrada */
+    .carta-cerrada {
+        width: 300px;
+        height: 200px;
+        background: #f2e4c9;
+        border: 2px solid #c0a98b;
+        position: relative;
+        cursor: pointer;
+        transition: transform 1s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .carta-cerrada::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: #e2cfb2;
+        border-bottom: 2px solid #c0a98b;
+        transform-origin: top;
+        transition: transform 1s;
+    }
+
+    /* Carta abierta */
+    .carta-abierta {
+        display: none;
+        width: 600px;
+        background: #fff7e6;
+        border: 2px solid #c0a98b;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        font-size: 28px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        font-family: "Gabriola", serif; /* ← CAMBIADO A GABRIOLA */
+    }
+
+    .typing {
+        border-right: 2px solid black;
+        animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+        50% { border-color: transparent; }
+    }
+</style>
+</head>
+<body>
+
+<!-- Carta cerrada -->
+<div class="carta-cerrada" id="carta"></div>
+
+<!-- Carta abierta -->
+<div class="carta-abierta" id="cartaAbierta"></div>
+
+<script>
+    const carta = document.getElementById("carta");
+    const cartaAbierta = document.getElementById("cartaAbierta");
+
+    // Texto de la carta
+    const textoCarta = `
+A Maerina, la mejor curadora:
+
+En estos vastos reinos donde las nubes viajan sobre montañas antiguas y el destino entrelaza los pasos de los viajeros, me atrevo a enviarte estas líneas.
+Aunque nuestro encuentro no se remonta a tiempos lejanos, el camino que hemos recorrido juntos ha sido digno de héroes: mundos peligrosos, batallas difíciles y momentos donde solo la confianza mutua permitió seguir adelante. Por ello, a veces siento como si nuestras almas se conocieran desde otras vidas.
+
+Tú, cuya energía sanadora restablece el equilibrio en medio del caos,
+y yo, un tanque cuyo deber es enfrentar cada golpe del destino…
+
+Con respeto y sinceridad, deseo hacerte una solicitud que nace tanto del espíritu como del corazón:
+
+¿Aceptarías formar una Alianza conmigo?
+No una alianza común, sino un juramento al estilo de las antiguas artes marciales.
+Un pacto donde nuestras fuerzas se unan, donde el apoyo mutuo sea nuestro escudo,
+y cada batalla sea escrita como parte de una historia compartida.
+
+Prometo, siguiendo los principios de mi sendero, proteger tu camino como si protegiera al mismo cielo.
+Y si tú aceptas, nuestras energías fluirán juntas como dos corrientes que, al encontrarse, forman un solo río.
+
+Si estas palabras llegan a tu corazón, estaré dispuesto a reunirme contigo bajo la sombra de un árbol antiguo, o en el lugar que tú decidas, para sellar este juramento según dictan las tradiciones de este mundo wuxia.
+
+Con respeto y determinación,
+Belryu
+`;
+
+    // Abrir la carta
+    carta.onclick = () => {
+        carta.style.transform = "scale(0)";
+        setTimeout(() => {
+            carta.style.display = "none";
+            cartaAbierta.style.display = "block";
+            escribirTexto(textoCarta, cartaAbierta);
+        }, 1000);
+    };
+
+    // Efecto de escritura
+    function escribirTexto(texto, elemento) {
+        let idx = 0;
+        function escribir() {
+            elemento.textContent = texto.slice(0, idx);
+            idx++;
+            if (idx <= texto.length) {
+                setTimeout(escribir, 30);
+            }
+        }
+        escribir();
+    }
+</script>
+
+</body>
+</html>
