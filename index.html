@@ -54,7 +54,7 @@
         font-size: 28px;
         line-height: 1.6;
         white-space: pre-wrap;
-        font-family: "Gabriola", serif; /* ← CAMBIADO A GABRIOLA */
+        font-family: "Gabriola", serif;
     }
 
     .typing {
@@ -75,9 +75,13 @@
 <!-- Carta abierta -->
 <div class="carta-abierta" id="cartaAbierta"></div>
 
+<!-- Audio -->
+<audio id="sonido" src="sonido.mp3"></audio>
+
 <script>
     const carta = document.getElementById("carta");
     const cartaAbierta = document.getElementById("cartaAbierta");
+    const sonido = document.getElementById("sonido");
 
     // Texto de la carta
     const textoCarta = `
@@ -105,8 +109,9 @@ Con respeto y determinación,
 Belryu
 `;
 
-    // Abrir la carta
+    // Abrir la carta con sonido
     carta.onclick = () => {
+        sonido.play(); // Reproduce el sonido
         carta.style.transform = "scale(0)";
         setTimeout(() => {
             carta.style.display = "none";
@@ -131,3 +136,4 @@ Belryu
 
 </body>
 </html>
+
