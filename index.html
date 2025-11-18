@@ -9,13 +9,38 @@
 
 <style>
     body {
-        background: #e5d7c3;
+        background: linear-gradient(#fbeee0, #f7dcc8);
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         margin: 0;
         font-family: "SimSun", serif;
+    }
+
+    /* Pétalos cayendo */
+    .petal {
+        position: absolute;
+        width: 14px;
+        height: 18px;
+        background: pink;
+        border-radius: 70% 70% 80% 60%;
+        opacity: 0.8;
+        animation: fall linear infinite, sway ease-in-out infinite;
+    }
+
+    /* Animación de caída */
+    @keyframes fall {
+        0% { transform: translateY(-10vh) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    /* Movimiento lateral suave */
+    @keyframes sway {
+        0% { margin-left: 0px; }
+        50% { margin-left: 30px; }
+        100% { margin-left: 0px; }
     }
 
     /* Carta cerrada */
@@ -69,13 +94,30 @@
 </head>
 <body>
 
+<!-- Generador de pétalos -->
+<script>
+for (let i = 0; i < 20; i++) {
+    let petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDuration = (6 + Math.random() * 5) + "s";
+    petal.style.animationDelay = Math.random() * 5 + "s";
+
+    let scale = 0.5 + Math.random();
+    petal.style.transform = `scale(${scale})`;
+
+    document.body.appendChild(petal);
+}
+</script>
+
 <!-- Carta cerrada -->
 <div class="carta-cerrada" id="carta"></div>
 
 <!-- Carta abierta -->
 <div class="carta-abierta" id="cartaAbierta"></div>
 
-<!-- Audio (corregido) -->
+<!-- Audio -->
 <audio id="sonido" src="sonido.mp3" preload="auto"></audio>
 
 <script>
@@ -111,16 +153,12 @@ Con respeto y determinación,
 Belryu
 `;
 
-    // Evento de clic con reproducción de sonido corregida
+    // Click para abrir la carta y reproducir el sonido
     carta.addEventListener("click", () => {
         sonido.currentTime = 0;
-
-        sonido.play().catch(err => {
-            console.log("Error al reproducir sonido:", err);
-        });
+        sonido.play().catch(err => console.log("Error de sonido:", err));
 
         carta.style.transform = "scale(0)";
-        
         setTimeout(() => {
             carta.style.display = "none";
             cartaAbierta.style.display = "block";
