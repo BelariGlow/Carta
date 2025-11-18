@@ -75,13 +75,15 @@
 <!-- Carta abierta -->
 <div class="carta-abierta" id="cartaAbierta"></div>
 
-<!-- Audio -->
-<audio id="sonido" src="sonido.mp3"></audio>
+<!-- Audio (corregido) -->
+<audio id="sonido" src="sonido.mp3" preload="auto"></audio>
 
 <script>
     const carta = document.getElementById("carta");
     const cartaAbierta = document.getElementById("cartaAbierta");
     const sonido = document.getElementById("sonido");
+
+    sonido.volume = 1.0;
 
     // Texto de la carta
     const textoCarta = `
@@ -109,16 +111,22 @@ Con respeto y determinación,
 Belryu
 `;
 
-    // Abrir la carta con sonido
-    carta.onclick = () => {
-        sonido.play(); // Reproduce el sonido
+    // Evento de clic con reproducción de sonido corregida
+    carta.addEventListener("click", () => {
+        sonido.currentTime = 0;
+
+        sonido.play().catch(err => {
+            console.log("Error al reproducir sonido:", err);
+        });
+
         carta.style.transform = "scale(0)";
+        
         setTimeout(() => {
             carta.style.display = "none";
             cartaAbierta.style.display = "block";
             escribirTexto(textoCarta, cartaAbierta);
         }, 1000);
-    };
+    });
 
     // Efecto de escritura
     function escribirTexto(texto, elemento) {
